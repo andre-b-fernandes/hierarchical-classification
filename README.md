@@ -40,5 +40,5 @@ After that you can run `poetry install`.
 You can run this project by:
 
 1. `python -m entrypoint parse` - To re-parse the validation and test dataset csv files.
-2. `python -m entrypoint knn` - To run the KNN model and predict the categories, calculating the hit ratio.
+2. `python -m entrypoint kmeans` - To run the KNN model and predict the categories, calculating the hit ratio.
 3. `python -m entrypoint ann` - To run the ANN model and predict the categories, calculating the hit ratio.

@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from logging import info
+from logging import info, getLogger, INFO
 from lib.data import (
     load_training_data,
     parse_train_file,
@@ -8,10 +8,13 @@ from lib.data import (
     CATEGORY_COL
 )
 from lib.ann import train as train_ann, predict as predict_ann
-from lib.clustering import train as train_knn, predict as predict_knn
+from lib.clustering import train as train_kmeans, predict as predict_means
 from lib.metrics import hit_ratio
 
 def main():
+
+    getLogger().setLevel(INFO)
+
     parser = ArgumentParser(
         prog="Hierarchical Classification",
         description="Attempts to run a PoC doing a hierarchical classification of a public kaggle dataset"
@@ -20,7 +23,7 @@ def main():
         "action",
         default="parse",
         help="Which action to take.",
-        choices=["parse", "knn", "ann"]
+        choices=["parse", "kmeans", "ann"]
     )
     args = parser.parse_args()
 
@@ -30,9 +33,9 @@ def main():
     else:
         train_df, train_embeddings, n_categories = load_training_data()
         validation_df, validation_embeddings,_ = load_validation_data()
-        if args.action == "knn":
-            kmeans = train_knn(matrix=train_embeddings, n_categories=n_categories)
-            validation_df = predict_knn(k_means=kmeans, df=validation_df, embeddings=validation_embeddings)
+        if args.action == "kmeans":
+            kmeans = train_kmeans(matrix=train_embeddings, n_categories=n_categories)
+            validation_df = predict_means(k_means=kmeans, df=validation_df, embeddings=validation_embeddings)
         elif args.action == "ann":
             categories = train_df[CATEGORY_COL].values
             ann, mapper = train_ann(embeddings=train_embeddings, categories=categories)

@@ -25,7 +25,7 @@ class ANN(Model):
             n_categories: int The number of categories.
         """
         super().__init__()
-        self.dense = Dense(units=1000, activation="sigmoid")
+        self.dense = Dense(units=1000, activation="relu")
         self.out_layer = Dense(units=n_categories, activation="softmax")
         self.compile(
             optimizer=Adam(),
