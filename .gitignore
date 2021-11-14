@@ -1,0 +1,3 @@
+__pycache__
+data/amazon/train_parsed_40k.csv
+data/amazon/val_parsed_10k.csv
